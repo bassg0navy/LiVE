@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<title>Local Video Using DB variables</title>
+
+{% block title %}Local Video{% endblock %}
+
+{% block main %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <h1>Profile</h1>
+      <hr>  <video controls width="500" height="500">
+
+        <source src={{ "/static/videos/"+VIDEO_NAME }} 
+                type="video/mp4">
+    
+        
+    </video>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+SELECT
+    ID,
+    VIDEO_NAME,
+    STATUS,
+    "TIMESTAMP"
+FROM
+    "VIEWS"
+ORDER BY
+    ID ASC NULLS LAST;

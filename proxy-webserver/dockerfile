@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1
+FROM python:3.9-slim-buster
+
+WORKDIR /app
+COPY . /app
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+ENV FLASK_APP=run.py
+ENV FLASK_ENV=development
+RUN apt-get update && apt-get install -y libaio1 wget unzip \
+    && wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip \
+    && unzip instantclient-basiclite-linuxx64.zip \
+    && rm -f instantclient-basiclite-linuxx64.zip \
+    && echo /app/instantclient* > /etc/ld.so.conf.d/oracle-instantclient.conf \
+    && ldconfig
+RUN cp -r network/ instantclient_21_5/
+ENV TNS_ADMIN="/app/instantclient_21_5/network/admin"
+#    apt-get install net-tools \
+#    apt-get install iputils-ping
+CMD [ "python3", "-m" , "flask", "run", "-p", "5000", "--host=0.0.0.0"]
+#CMD [ "python3", "run.py"]
+#CMD [ "ls", "-lah"]
