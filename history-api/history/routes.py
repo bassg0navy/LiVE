@@ -4,7 +4,7 @@ from history import requests
 from history import app, VIDEO_STORAGE_HOST, VIDEO_STORAGE_PORT, connection
 from history import cx_Oracle, sys, os, json, datetime
 from celery import Celery
-from history.receive import main
+#from history.receive import main
 import pika
 
 # Configure Celery
@@ -92,33 +92,47 @@ def process(msg):
     newtask.delay(msg)
     return 'I sent an async request'
 
-def main():
-    rabbit_connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit'))
-    channel = rabbit_connection.channel()
+# RabbitMQ Connection Definition
+rabbit_connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit', port='5672'))
+channel = rabbit_connection.channel()
 
-    channel.queue_declare(queue='viewed')
+#channel.queue_declare(queue='viewed')
 
-    def callback(ch, method, properties, body):
-        jsonBody = json.loads(body)
-        video_name = jsonBody['video_name']
-        status = jsonBody['status']
-        timestamp = jsonBody['timestamp']
-        #print(video_name, status, timestamp)
-        print(" [x] Received %r" % body)
-        #addView.delay(jsonBody)
-        cur = connection.cursor()
-        cur.execute("""
-            insert into VIEWS (video_name, status, timestamp)
-            values (:1, :2, :3)""", [video_name, status, timestamp])
-        connection.commit()
-        ch.basic_ack(delivery_tag = method.delivery_tag)
-         
-    channel.basic_consume(queue='viewed', on_message_callback=callback)     
+# Broadcast (Pub/Sub)
+channel.exchange_declare(exchange='broadcast', exchange_type='fanout')
+result = channel.queue_declare(queue='', exclusive=True)
+queue_name = result.method.queue
 
-    print(' [*] Waiting for messages. To exit press CTRL+C')
-    channel.start_consuming()
+channel.queue_bind(exchange='broadcast', queue=queue_name)
+print(' [*] Waiting for logs. To exit press CTRL+C')
 
-main()
+# Callback Function
+def callback(ch, method, properties, body):
+    jsonBody = json.loads(body)
+    video_name = jsonBody['video_name']
+    status = jsonBody['status']
+    timestamp = jsonBody['timestamp']
+    #print(video_name, status, timestamp)
+    #print(" [x] Received %r" % body)
+    #addView.delay(jsonBody)
+    cur = connection.cursor()
+    cur.execute("""
+        insert into VIEWS (video_name, status, timestamp)
+        values (:1, :2, :3)""", [video_name, status, timestamp])
+    connection.commit()
+    print(" [x] %r" % body)
+
+channel.basic_consume(
+    queue=queue_name, on_message_callback=callback, auto_ack=True)
+
+channel.start_consuming()
+'''ch.basic_ack(delivery_tag = method.delivery_tag)      
+channel.basic_consume(queue='viewed', on_message_callback=callback)     
+print(' [*] Waiting for messages. To exit press CTRL+C')
+channel.start_consuming()'''
+
+
+#main()
 '''except KeyboardInterrupt:
         print('Interrupted')
         try:

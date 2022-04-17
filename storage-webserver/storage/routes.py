@@ -6,6 +6,7 @@ from jinja2 import Template
 import urllib3
 import urllib.request
 import re
+import pika
 
 from oci.config import from_file
 config = from_file(file_location="/app/.oci/abstract.conf")
@@ -98,33 +99,27 @@ def video_streaming(video_name):
     resp.headers.add('Content-Range', 'bytes {0}-{1}/{2}'.format(start, start + length - 1, file_size))
     return resp
     #return render_template('static_streaming.html', video_name=video_name, video_file=video_file)  # render a template
-    
+
+# RabbitMQ Function
+rabbit_connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbit', port='5672'))
+channel = rabbit_connection.channel()
+
+# Broadcast (Pub/Sub) Function
+channel.exchange_declare(exchange='broadcast', exchange_type='fanout')
+result = channel.queue_declare(queue='', exclusive=True)
+queue_name = result.method.queue
+channel.queue_bind(exchange='broadcast', queue=queue_name)
+print(' [*] Waiting for logs. To exit press CTRL+C')
+
+def callback(ch, method, properties, body):
+    print(" [x] %r" % body)
+
+channel.basic_consume(
+    queue=queue_name, on_message_callback=callback, auto_ack=True)
+
+channel.start_consuming()
+
 
 @app.route("/template")
 def template_test():
     return render_template('template.html', my_string="Wheeeee!", my_list=[0,1,2,3,4,5])
-
-#@app.route('/fam4330e84be1734f3b8f9bcc9df3bef1c8.mp4', methods=['GET'])
-#def generate_video():
-    #def generate():
-        #for row in iter_all_rows():
-            #yield f"{','.join(row)}\n"
-    #return app.response_class(generate(), mimetype='text/csv')
-
-# read file
-#response = request.get('https://objectstorage.us-ashburn-1.oraclecloud.com/p/hNZiv6tJIb_XThmFklLH4uqadlqGXcCE3YiG1sNY3aCaltQ-smCRkZm932HM8shk/n/id9ypxcsj7cu/b/streaming-videos/o/OC1_regions')  
-#data = response.content
-
-# r = requests.get('https://oci.foo.bar')
-#@app.route('/json', methods=['GET'])
-#def return_json():
-#    with app.test_request_context(): # '/json', methods='GET'
-#        response = requests.get('https://objectstorage.us-ashburn-1.oraclecloud.com/p/hNZiv6tJIb_XThmFklLH4uqadlqGXcCE3YiG1sNY3aCaltQ-smCRkZm932HM8shk/n/id9ypxcsj7cu/b/streaming-videos/o/OC1_regions')  
-#        data = response.text
-#        return render_template('static.html')  # render a template
-
-#@app.route('/<video_name>', methods=['GET'])
-#def video_streaming():
-    #PAR = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/-cI_7hrHjQeELXCbt03fYDftO10nsIOj9f_B98EXKQ_dyUMItw2M2SrTkBC3kOQQ/n/id9ypxcsj7cu/b/streaming-videos/o/"
-    #video_url = "{0}/{1}".format(PAR,video_name)
-    #return render_template('static_local.html', video_name=video_name, PAR=PAR, video_url=video_url)  # render a template
