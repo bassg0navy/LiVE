@@ -5,7 +5,7 @@ variable "fingerprint" {}
 variable "private_key_path" {}
 
 provider "oci" {
-  version = "3.1.0"
+  version = "4.71.0"
   region = var.region
   tenancy_ocid = var.tenancy_ocid
   user_ocid = var.user_ocid
