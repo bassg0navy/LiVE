@@ -1,6 +1,6 @@
 // Adds preexisting container registry to LiVE stack
 resource "oci_artifacts_container_repository" "LiVE_container_repo" {
-    compartment_id = var.root.compartment_id
+    compartment_id = var.root_compartment_id
     display_name = var.container_repository_display_name
 }
 
