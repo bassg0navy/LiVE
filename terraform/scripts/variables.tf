@@ -25,7 +25,7 @@ variable "user_ocid" {
   default = "ocid1.user.oc1..aaaaaaaa6y2u73mpdyoxy23syxzlmivcum3wdq3uqaod65eqdlkrnylyadzq"
 }
 variable "container_repository_display_name" {
-  default = "LiVE_Containers"
+  default = "LiVE-Containers"
 }
 variable "registry_state" {
   default = ""
