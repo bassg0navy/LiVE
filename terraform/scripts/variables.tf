@@ -77,7 +77,7 @@ variable "bastion_subnet_display_name" {
   default = "oke-bastionSubnet-Precog"
 }
 variable "node_subnet_display_name" {
-  defualt = "oke-nodesubnet-quick-Precog-7dcdc1d33-regional"
+  default = "oke-nodesubnet-quick-Precog-7dcdc1d33-regional"
 }
 variable "apiEndpoint_display_name" {
   default = "oke-k8sApiEndpoint-subnet-quick-Precog-7dcdc1d33-regional"
