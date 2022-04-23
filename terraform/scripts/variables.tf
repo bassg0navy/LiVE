@@ -9,7 +9,7 @@ variable "private_key_path" {
     default = "/app/storage-webserver/.oci/abstract-rsa-private-key.pem"
 }
 variable "tenancy_ocid" {
-    default = "ocid1.user.oc1..aaaaaaaa6y2u73mpdyoxy23syxzlmivcum3wdq3uqaod65eqdlkrnylyadzq"
+    default = "ocid1.tenancy.oc1..aaaaaaaadkxkk76ljinkchc3gmtgohryrbegiiaakcyrnhgyuy6a7iutlmtq"
 }
 variable "root_compartment_id" {
     default = "ocid1.tenancy.oc1..aaaaaaaadkxkk76ljinkchc3gmtgohryrbegiiaakcyrnhgyuy6a7iutlmtq"
@@ -20,4 +20,7 @@ variable "ManagedCompartmentForPaaS_id" {
 }
 variable "fingerprint" {
   default = "a6:f6:08:bc:b8:bd:18:21:ce:37:23:0e:68:45:e8:ee"
+}
+variable "user_ocid" {
+  default = "ocid1.user.oc1..aaaaaaaa6y2u73mpdyoxy23syxzlmivcum3wdq3uqaod65eqdlkrnylyadzq"
 }
