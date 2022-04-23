@@ -18,3 +18,6 @@ variable "ManagedCompartmentForPaaS_id" {
   default = "ocid1.compartment.oc1..aaaaaaaahn7ibzcqsf4ywp4qr34hw6n4lrawqxiooy7oq6h7nxygxurmflrq"
   description = "child compartment under root compartment (bassg0navy)"
 }
+variable "fingerprint" {
+  default = "a6:f6:08:bc:b8:bd:18:21:ce:37:23:0e:68:45:e8:ee"
+}
