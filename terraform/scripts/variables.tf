@@ -104,16 +104,16 @@ variable "svclbsubnet_dns_label" {
 // Subnet Security List IDs
 
 variable "bastion_subnet_security_list_ids" {
-  default = "ocid1.securitylist.oc1.iad.aaaaaaaaxge3zxys7ztgoococjk4kwszvj7fscnpx3ejxbcfke7k5trpwm4q"
+  default = ["ocid1.securitylist.oc1.iad.aaaaaaaaxge3zxys7ztgoococjk4kwszvj7fscnpx3ejxbcfke7k5trpwm4q"]
 }
 variable "node_subnet_security_lists_ids" {
-  default = "ocid1.securitylist.oc1.iad.aaaaaaaa5d4wzajhnohrrgpit4t6gd72ixjbaljvrizra6sneoux3zxo42qq"
+  default = ["ocid1.securitylist.oc1.iad.aaaaaaaa5d4wzajhnohrrgpit4t6gd72ixjbaljvrizra6sneoux3zxo42qq"]
 }
 variable "apiEndpoint_subnet_security_list_ids" {
-  default = "ocid1.securitylist.oc1.iad.aaaaaaaazzt4okeeippelfyuddbnkihxgkktkm2fwqxsconlta6ybcnwcmva"
+  default = ["ocid1.securitylist.oc1.iad.aaaaaaaazzt4okeeippelfyuddbnkihxgkktkm2fwqxsconlta6ybcnwcmva"]
 }
 variable "svclbsubnet_subnet_security_list_ids" {
-  default = "ocid1.securitylist.oc1.iad.aaaaaaaaxge3zxys7ztgoococjk4kwszvj7fscnpx3ejxbcfke7k5trpwm4q"
+  default = ["ocid1.securitylist.oc1.iad.aaaaaaaaxge3zxys7ztgoococjk4kwszvj7fscnpx3ejxbcfke7k5trpwm4q"]
 }
 
 // Route Table Display Names

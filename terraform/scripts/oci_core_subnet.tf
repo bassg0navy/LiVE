@@ -24,7 +24,7 @@ resource "oci_core_subnet" "precog_node_subnet" {
     prohibit_internet_ingress = "false"
     prohibit_public_ip_on_vnic = "false"
     route_table_id = oci_core_route_table.private_route_table.id
-    security_list_ids = var.node_subnet_security_lists_ids
+    security_list_ids = var.node_subnet_security_list_ids
 }
 resource "oci_core_subnet" "precog_apiEndpoint_subnet" {
     // Required
