@@ -106,7 +106,7 @@ variable "svclbsubnet_dns_label" {
 variable "bastion_subnet_security_list_ids" {
   default = ["ocid1.securitylist.oc1.iad.aaaaaaaaxge3zxys7ztgoococjk4kwszvj7fscnpx3ejxbcfke7k5trpwm4q"]
 }
-variable "node_subnet_security_lists_ids" {
+variable "node_subnet_security_list_ids" {
   default = ["ocid1.securitylist.oc1.iad.aaaaaaaa5d4wzajhnohrrgpit4t6gd72ixjbaljvrizra6sneoux3zxo42qq"]
 }
 variable "apiEndpoint_subnet_security_list_ids" {
@@ -117,6 +117,7 @@ variable "svclbsubnet_subnet_security_list_ids" {
 }
 
 // Route Table Display Names
+
 variable "private_route_table_display_name" {
   default = "oke-private-routetable-Precog-7dcdc1d33"
 }
