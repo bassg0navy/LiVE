@@ -7,7 +7,3 @@ provider "oci" {
   private_key_path = var.private_key_path
   config_file_profile= "LiVE"
 }
-provider "kubernetes" {
-  config_path    = "~/.kube/config"
-  //config_context = "my-context"
-}

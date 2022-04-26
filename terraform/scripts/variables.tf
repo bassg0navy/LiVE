@@ -1,4 +1,7 @@
 // Variables File
+variable "compartment_ocid" {
+  default = "ocid1.tenancy.oc1..aaaaaaaadkxkk76ljinkchc3gmtgohryrbegiiaakcyrnhgyuy6a7iutlmtq"
+}
 variable "app_name" {
     default = "LiVE"
 }
