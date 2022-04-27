@@ -7,7 +7,7 @@ terraform {
   }
 }
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  config_path    = "kubeconfig"
   //config_context = "my-context"
 }
 resource "kubernetes_namespace" "LiVE_namespace" {
